@@ -1,8 +1,12 @@
+labels:
+  app: elasticsearch
+  app.kubernetes.io/component: elasticsearch
+  app.kubernetes.io/instance: elasticsearch
+  app.kubernetes.io/name: elasticsearch
+  app.kubernetes.io/part-of: chatbot-application
+
 name: elasticsearch-sample
 tls: false
-
-labels:
-  foo: bar
 
 resources:
   requests:
