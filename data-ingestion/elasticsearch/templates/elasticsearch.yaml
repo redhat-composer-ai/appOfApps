@@ -1,0 +1,32 @@
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: {{ .Values.name }}
+  labels:
+    {{- include "labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.tls }}
+  http:
+    tls:
+      selfSignedCertificate:
+        disabled: true
+  {{- end }}
+  nodeSets:
+    - config:
+        node.roles:
+          - master
+          - data
+        node.attr.attr_name: attr_value
+        node.store.allow_mmap: false
+      podTemplate:
+        metadata:
+          labels:
+            foo: bar
+        spec:
+          containers:
+            - name: elasticsearch
+              resources:
+                {{- .Values.resources | toYaml | nindent 16 }}
+      name: default
+      count: {{ .Values.count }}
+  version: {{ .Values.version }}
