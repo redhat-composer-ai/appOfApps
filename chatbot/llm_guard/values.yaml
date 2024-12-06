@@ -1,0 +1,25 @@
+labels:
+  app: llm_guard
+  app.kubernetes.io/component: llm_guard
+  app.kubernetes.io/instance: llm_guard
+  app.kubernetes.io/name: llm_guard
+  app.kubernetes.io/part-of: chatbot-application
+
+name: llm_guard
+
+image: 'quay.io/wspinks0/llm_guard_kitpg:main'
+imagePullPolicy: Always
+
+resources:
+  limits:
+    cpu: 700m
+    memory: 4Gi
+    nvidia.com/gpu: '1'
+  requests:
+    cpu: 500m
+    memory: 2Gi
+    nvidia.com/gpu: '1'
+tolerations:
+  - key: nvidia.com/gpu
+    value: 'True'
+    effect: NoSchedule

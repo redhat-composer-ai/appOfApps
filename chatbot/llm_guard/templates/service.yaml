@@ -1,0 +1,19 @@
+﻿kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .Values.name }}
+  labels:
+    {{- include "labels" . | nindent 4 }}
+spec:
+  ports:
+    - name: 8443-tcp
+      protocol: TCP
+      port: 8443
+      targetPort: 8443
+  internalTrafficPolicy: Cluster
+  type: ClusterIP
+  sessionAffinity: None
+  selector:
+    deployment: {{ .Values.name }}
+status:
+  loadBalancer: {}
