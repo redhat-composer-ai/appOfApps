@@ -6,6 +6,7 @@ labels:
   app.kubernetes.io/part-of: chatbot-application
 
 name: elasticsearch-sample
+namespace: elasticsearch-operator
 tls: false
 
 resources:
