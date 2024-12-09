@@ -26,6 +26,7 @@ applications:
   #   path: data-ingestion/weaviate
   - name: elasticsearch
     path: data-ingestion/elasticsearch
+    serverSideApply: true
   - name: kfp-pipeline
     path: data-ingestion/kfp
   - name: quarkus-llm-router

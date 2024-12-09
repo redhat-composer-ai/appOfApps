@@ -11,7 +11,9 @@ metadata:
   namespace: {{ default $.Values.gitops.namespace }}
   annotations:
     argocd.argoproj.io/sync-wave: "{{ .syncWave | default 0 }}"
+    {{- if .serverSideApply }}
     argocd.argoproj.io/sync-options: ServerSideApply=true
+    {{- end }}
 spec:
   project: {{ $.Values.gitops.project | default "default" }}
   source:
