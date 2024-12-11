@@ -12,7 +12,7 @@ dspa:
 
 defaults:
   git:
-    url: 'https://github.com/redhat-composer-ai/data-ingestion'
+    url: 'https://github.com/sukantadash/data-ingestion.git'
     revision: 'main'
     path: 'kfp/redhat-product-documentation-ingestor'
     script: 'ingestion-pipeline.py'
