@@ -10,15 +10,15 @@ spec:
       description: Repo URL
       name: GIT_URL
       type: string
-    - default: '{{ .Values.defaults.git.website-ingestion-url }}'
+    - default: '{{ .Values.defaults.git.website_ingestion_url }}'
       description: The website url to be ingested
       name: WEBSITE_URL
       type: string
-    - default: '{{ .Values.defaults.git.website-ingestion-script }}'
+    - default: '{{ .Values.defaults.git.website_ingestion_script }}'
       description: The location of the python script containing the kfp pipeline for website ingestion
       name: KFP_SCRIPT
       type: string  
-    - default: '{{ .Values.defaults.git.website-ingestion-path }}'
+    - default: '{{ .Values.defaults.git.website_ingestion_path }}'
       description: The direcotry of the KFP_SCRIPT for website ingestion
       name: PATH_CONTEXT
       type: string
