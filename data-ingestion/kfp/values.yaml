@@ -16,3 +16,6 @@ defaults:
     revision: 'main'
     path: 'kfp/redhat-product-documentation-ingestor'
     script: 'ingestion-pipeline.py'
+    website-ingestion-path: 'kfp/redhat-product-documentation-ingestor'
+    website-ingestion-script: 'ingestion-pipeline.py'
+    website-ingestion-url: 'https://www.redhat.com/en/topics/containers/red-hat-openshift-okd'

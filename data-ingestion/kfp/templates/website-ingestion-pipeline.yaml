@@ -1,0 +1,84 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: website-ingestion-pipeline
+spec:
+  workspaces:
+    - name: source
+  params:
+    - default: '{{ .Values.defaults.git.url }}'
+      description: Repo URL
+      name: GIT_URL
+      type: string
+    - default: '{{ .Values.defaults.git.website-ingestion-url }}'
+      description: The website url to be ingested
+      name: WEBSITE_URL
+      type: string
+    - default: '{{ .Values.defaults.git.website-ingestion-script }}'
+      description: The location of the python script containing the kfp pipeline for website ingestion
+      name: KFP_SCRIPT
+      type: string  
+    - default: '{{ .Values.defaults.git.website-ingestion-path }}'
+      description: The direcotry of the KFP_SCRIPT for website ingestion
+      name: PATH_CONTEXT
+      type: string
+    - default: '{{ .Values.defaults.git.revision }}'
+      name: GIT_REVISION
+      type: string
+    - default: {{ .Values.defaults.python_image | default "3.11-ubi9" }}
+      name: PYTHON_IMAGE
+      type: string
+    - default: 'image-registry.openshift-image-registry.svc:5000/{{ .Release.Namespace }}/dspa'
+      name: TARGET_IMAGE
+      type: string
+    - default: 'https://ds-pipeline-dspa-{{ .Release.Namespace }}.{{ $.Values.clusterDomain }}'
+      name: KUBEFLOW_ENDPOINT
+      type: string
+  tasks:
+    - name: git-clone
+      params:
+        - name: url
+          value: $(params.GIT_URL)
+        - name: revision
+          value: $(params.GIT_REVISION)
+        - name: gitInitImage
+          value: 'registry.redhat.io/openshift-pipelines/pipelines-git-init-rhel8@sha256:868966ef9d4b54952d8a74eb83bba40eb1f52c0148994fa704efd0e3797c61c5'
+      taskRef:
+        kind: ClusterTask
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: source
+    - name: s2i-python
+      params:
+        - name: VERSION
+          value: $(params.PYTHON_IMAGE)
+        - name: PATH_CONTEXT
+          value: $(params.PATH_CONTEXT)
+        - name: IMAGE
+          value: $(params.TARGET_IMAGE)
+      runAfter:
+        - git-clone
+      taskRef:
+        kind: ClusterTask
+        name: s2i-python
+      workspaces:
+        - name: source
+          workspace: source
+    - name: execute-website-ingestion-kubeflow-pipeline
+      params:
+        - name: IMAGE
+          value: $(params.TARGET_IMAGE)
+        - name: TAG
+          value: latest
+        - name: SCRIPT
+          value: $(params.KFP_SCRIPT)
+        - name: KUBEFLOW_ENDPOINT
+          value: $(params.KUBEFLOW_ENDPOINT)
+        - name: WEBSITE_URL
+          value: $(params.WEBSITE_URL)          
+      runAfter:
+        - s2i-python
+      taskRef:
+        kind: Task
+        name: execute-website-ingestion-kubeflow-pipeline
