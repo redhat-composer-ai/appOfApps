@@ -14,6 +14,10 @@ spec:
       description: The website url to be ingested
       name: WEBSITE_URL
       type: string
+    - default: '{{ .Values.defaults.git.vectordb_index }}'
+      name: VECTORDB_INDEX
+      description: The vector db index where the website scrape to be ingested
+      type: string    
     - default: '{{ .Values.defaults.git.website_ingestion_script }}'
       description: The location of the python script containing the kfp pipeline for website ingestion
       name: KFP_SCRIPT
@@ -76,7 +80,9 @@ spec:
         - name: KUBEFLOW_ENDPOINT
           value: $(params.KUBEFLOW_ENDPOINT)
         - name: WEBSITE_URL
-          value: $(params.WEBSITE_URL)          
+          value: $(params.WEBSITE_URL)    
+        - name: VECTORDB_INDEX
+          value: $(params.VECTORDB_INDEX)    
       runAfter:
         - s2i-python
       taskRef:

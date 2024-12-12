@@ -21,12 +21,17 @@ spec:
     - name: WEBSITE_URL
       description: The website url to be ingested
       default: "https://www.redhat.com/en/topics/containers/red-hat-openshift-okd"      
+    - name: VECTORDB_INDEX
+      description: The vector db index where the website scrape to be ingested
+      default: "WebScrapedData"
   steps:
     - name: execute-python
       image: $(inputs.params.IMAGE):$(inputs.params.TAG)
       env:
         - name: WEBSITE_URL
           value: $(inputs.params.WEBSITE_URL)
+        - name: VECTORDB_INDEX
+          value: $(inputs.params.VECTORDB_INDEX)          
         - name: KUBEFLOW_ENDPOINT
           value: $(inputs.params.KUBEFLOW_ENDPOINT)
         - name: BASE_IMAGE
