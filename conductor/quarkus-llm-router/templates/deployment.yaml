@@ -32,6 +32,11 @@ spec:
           resources:
             {{- .Values.resources | toYaml | nindent 12 }}
           env:
+            - name: ELASTICSEARCH_DEFAULT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: elasticsearch-es-elastic-user
+                  key: elastic
             - name: WEAVIATE_DEFAULT_APIKEY
               valueFrom:
                 secretKeyRef:
