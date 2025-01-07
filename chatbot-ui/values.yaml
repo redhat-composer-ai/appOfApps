@@ -13,6 +13,10 @@ imagePullPolicy: Always
 serviceMesh:
   enabled: false
 
+repo:
+  url: https://github.com/redhat-composer-ai/chatbot-ui.git
+  branch: v2.2.0
+
 resources:
   limits:
     cpu: 500m
