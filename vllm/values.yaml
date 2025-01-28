@@ -26,9 +26,8 @@ servingModel:
       nvidia.com/gpu: '1'
 
 runtime:
-  storageUri: 'oci://quay.io/redhat-ai-services/modelcar-catalog:granite-3.0-8b-instruct'
+  storageUri: 'oci://quay.io/redhat-ai-services/modelcar-catalog:granite-3.1-8b-instruct'
   timeout: 45m
   logLevel: DEBUG
   # 2.16 RHOAI with vLLM v0.6.3
   image: 'quay.io/modh/vllm@sha256:c86ff1e89c86bc9821b75d7f2bbc170b3c13e3ccf538bf543b1110f23e056316'
-
