@@ -1,14 +1,14 @@
-{{- range .Values.applications }}
+{{- range $name, $val := .Values.applications }}
 # allow applications to be set to enabled: false
 # `.enabled | default true` always evaluates to true
 # reference: https://broersma.dev/til-helm-boolean-functions-and-falsy-ness/
-{{- if list nil true | has .enabled }}
+{{- if list nil true | has $val.enabled }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: {{ .name }}-{{ $.Values.namespacePrefix }}{{ .namespaceSuffix }}
+  name: {{ $name }}-{{ $.Values.namespacePrefix }}{{ $val.namespaceSuffix }}
   labels:
-    app.kubernetes.io/name: {{ .name }}
+    app.kubernetes.io/name: {{ $name }}
     app.kubernetes.io/instance-of: {{ $.Values.name }}
     app.kubernetes.io/managed-by: ArgoCD
     tenant: {{ $.Values.name }}
@@ -19,28 +19,28 @@ spec:
   project: {{ $.Values.gitops.project | default "default" }}
   source:
     repoURL: {{ $.Values.repo.url }}
-    targetRevision: {{ .branch | default $.Values.repo.branch }}
-    path: {{ .path | default .name }}
+    targetRevision: {{ $val.branch | default $.Values.repo.branch }}
+    path: {{ $val.path | default $name }}
     helm:
       valueFiles: 
-        - {{ .valueFile | default $.Values.defaultValuesFile }}
+        - {{ $val.valueFile | default $.Values.defaultValuesFile }}
       parameters:
         - name: clusterDomain
           value: {{ $.Values.clusterDomain }}
-        {{- range .parameters }}
+        {{- range $val.parameters }}
         - name: {{ .name }}
           value: {{ .value }}
         {{- end }}
   destination:
     server: https://kubernetes.default.svc
-    namespace: {{ $.Values.namespacePrefix }}{{ .namespaceSuffix }}
+    namespace: {{ $.Values.namespacePrefix }}{{ $val.namespaceSuffix }}
   syncPolicy:
     automated: 
       prune: true
       selfHeal: true
-  {{- if .ignoreDifferences }}
+  {{- if $val.ignoreDifferences }}
   ignoreDifferences:
-    {{- toYaml .ignoreDifferences | nindent 4 }}
+    {{- toYaml $val.ignoreDifferences | nindent 4 }}
   {{- end }}
 ---
 {{- end }}
