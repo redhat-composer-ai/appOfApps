@@ -35,3 +35,4 @@ runtime:
 inferenceService:
   args:
     - "--max-model-len=10000"
+    - "--gpu-memory-utilization=0.99"
