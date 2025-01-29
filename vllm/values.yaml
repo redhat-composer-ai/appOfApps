@@ -31,3 +31,7 @@ runtime:
   logLevel: DEBUG
   # 2.16 RHOAI with vLLM v0.6.3
   image: 'quay.io/modh/vllm@sha256:c86ff1e89c86bc9821b75d7f2bbc170b3c13e3ccf538bf543b1110f23e056316'
+
+inferenceService:
+  args:
+    - "--max-model-length=25000"
