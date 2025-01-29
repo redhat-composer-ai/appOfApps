@@ -34,4 +34,4 @@ runtime:
 
 inferenceService:
   args:
-    - "--max-model-length=25000"
+    - "--max-model-len=25000"
