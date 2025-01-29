@@ -4,5 +4,5 @@
 {{- end }}
 {{- end }}
 {{- define "chatbot-ui.imageref" -}}
-"{{ .Values.image.repo }}:{{ .Values.image.ref | default (print .Chart.AppVersion) }}"
+"{{ .Values.image.repository }}:{{ .Values.image.tag | default (print .Chart.AppVersion) }}"
 {{- end }}

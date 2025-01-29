@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: {{ .Values.name }}
-          image: {{ tpl chatbot-ui.imageref . }}
+          image: {{ include chatbot-ui.imageref . }}
           ports:
             - containerPort: 8080
               protocol: TCP

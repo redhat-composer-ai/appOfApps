@@ -8,8 +8,8 @@ labels:
 name: chatbot-ui
 
 image:
-  repo: "quay.io/redhat-composer-ai/composer-ui"
-  ref: "v0.2.3"
+  repository: "quay.io/redhat-composer-ai/composer-ui"
+  tag: "v0.2.3"
 imagePullPolicy: Always
 
 serviceMesh:
