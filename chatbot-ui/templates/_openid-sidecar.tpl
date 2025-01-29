@@ -1,4 +1,4 @@
-{{- define "chatbotUi.openIdSidecar" }}
+{{- define "chatbot-ui.openIdSidecar" }}
         - name: "{{ .Values.name }}-oauth"
           image: "{{ .Values.openid.image.repository }}:{{ .Values.openid.image.tag }}"
           imagePullPolicy: {{ .Values.imagePullPolicy | default "Always" }}
@@ -44,7 +44,8 @@
           #  - mountPath: /etc/pki/tls/certs/generated
           #     name: cert-mount
           #     readOnly: true
-      volumes:
+{{- end }}
+{{- define "chatbot-ui.openIdVolume" }}
         - name: "{{ .Values.name }}-oauth"
           configMap:
             name: "{{ .Values.name }}-oauth"
