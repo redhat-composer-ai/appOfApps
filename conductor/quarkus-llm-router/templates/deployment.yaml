@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: {{ .Values.name }}
-          image: {{ .Values.image }}
+          image: {{ include conductor.imageref . }}
           ports:
             - containerPort: 5000
               protocol: TCP
