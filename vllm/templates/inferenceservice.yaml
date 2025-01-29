@@ -16,6 +16,8 @@ spec:
       modelFormat:
         name: vLLM
       name: ''
+      args:
+        {{- toYaml .Values.inferenceService.args | nindent 8 }}
       resources: 
         {{- .Values.servingModel.resources | toYaml | nindent 8 }}
       runtime: {{ include "vllm.fullname" . }}

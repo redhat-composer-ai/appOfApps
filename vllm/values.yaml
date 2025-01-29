@@ -26,8 +26,13 @@ servingModel:
       nvidia.com/gpu: '1'
 
 runtime:
-  storageUri: 'oci://quay.io/redhat-ai-services/modelcar-catalog:granite-3.0-8b-instruct'
+  storageUri: 'oci://quay.io/redhat-ai-services/modelcar-catalog:granite-3.1-8b-instruct'
   timeout: 45m
   logLevel: DEBUG
-  # 2.14 RHOAI with vLLM v0.5.5
-  image: 'quay.io/modh/vllm@sha256:97b91f9bd71202f5de8d379cfb61baec887b47f836a2ff8b158c946196de5660'
+  # 2.16 RHOAI with vLLM v0.6.3
+  image: 'quay.io/modh/vllm@sha256:c86ff1e89c86bc9821b75d7f2bbc170b3c13e3ccf538bf543b1110f23e056316'
+
+inferenceService:
+  args:
+    - "--max-model-len=23000"
+    - "--gpu-memory-utilization=0.99"
