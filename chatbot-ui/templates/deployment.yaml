@@ -37,11 +37,11 @@ spec:
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       volumes:
-      - name: config-volume
-        configMap:
+        - name: config-volume
+          configMap:
           name: {{ .Values.name }}-config
       {{- if .Values.openid.enabled }}
-      {{- template "chatbot-ui.openIdVolume" . }}
+        {{- template "chatbot-ui.openIdVolume" . }}
       {{- end }}
   strategy:
     type: RollingUpdate
