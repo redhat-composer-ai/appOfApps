@@ -36,6 +36,20 @@ The Roles and RoleBindings support the "update job".  This Job runs as a PostSyn
 
 Note that this job looks at the default ingress and the dns for the cluster to dynamically grab the cluster names.  If this is incorrect for the cluster, the Job can be updated with names for other ingress controllers or dns entries.
 
+## Using the client
+
+The realm.json sets up a default "backend-service" client under the openshift-ai realm.  The client Id therefore would be "backend-service" with a hard coded secret in the realm.json "mysecret".  This secret can be regenerated in Keycloak.  In order to use this client in the quarkus application, the following configuration settings should be used, changing the server url to the running instance of Keycloak:
+
+```
+disable.authorization=false
+
+quarkus.oidc.auth-server-url=https://keycloak-composer-ai-apps.apps-crc.testing/realms/openshift-ai
+quarkus.oidc.client-id=backend-service
+quarkus.oidc.credentials.secret=mysecret
+quarkus.oidc.tls.verification=none
+quarkus.oidc.application-type=web-app
+```
+
 ## Troubleshooting
 
 Q. I have random errors when logging into the application
@@ -43,3 +57,4 @@ A. Check that all the OAuth components have the correct configuration.  If using
 
 Q. Keycloak is failing to load over https and has cross site errors in the developer console.
 A. Make sure that the "proxy" headers are correctly set as forwarded on the Keycloak CR.  
+
