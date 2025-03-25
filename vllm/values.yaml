@@ -2,7 +2,7 @@ fullnameOverride: "vllm"
 
 inferenceService:
   storage:
-    storageUri: 'oci://quay.io/redhat-ai-services/modelcar-catalog:granite-3.1-8b-instruct'
+    storageUri: 'oci://quay.io/redhat-ai-services/modelcar-catalog:granite-3.2-8b-instruct'
   args:
     - "--max-model-len=23000"
     - "--gpu-memory-utilization=0.99"
