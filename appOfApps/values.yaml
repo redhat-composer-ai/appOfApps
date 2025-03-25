@@ -14,7 +14,16 @@ defaultValuesFile: values.yaml
 # Applications to be deployed
 applications:
   vllm-model:
-    path: vllm
+    sources:
+      - repoURL: https://redhat-ai-services.github.io/helm-charts/
+        chart: vllm-kserve
+        targetRevision: "0.3.5"
+        helm:
+          valueFiles:
+            - $values/vllm/values.yaml
+      - repoURL: "{{ $.Values.repo.url }}"
+        targetRevision: "{{ $.Values.repo.branch }}"
+        ref: values
     namespaceSuffix: apps
   weaviate:
     path: weaviate
