@@ -1,0 +1,236 @@
+---
+# Source: AppOfApps/templates/application.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bootstrap-composer-ai-apps
+  labels:
+    app.kubernetes.io/name: bootstrap
+    app.kubernetes.io/instance-of: composer-ai
+    app.kubernetes.io/managed-by: ArgoCD
+    tenant: composer-ai
+  namespace: composer-ai-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/redhat-composer-ai/appOfApps.git
+    targetRevision: main
+    path: util/bootstrap
+    helm:
+      valueFiles: 
+        - values.yaml
+      parameters:
+        - name: clusterDomain
+          value: apps.cluster-c4gwj.c4gwj.sandbox1157.opentlc.com
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: composer-ai-apps
+  syncPolicy:
+    automated: 
+      prune: true
+      selfHeal: true
+---
+# Source: AppOfApps/templates/application.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: chatbot-ui-composer-ai-apps
+  labels:
+    app.kubernetes.io/name: chatbot-ui
+    app.kubernetes.io/instance-of: composer-ai
+    app.kubernetes.io/managed-by: ArgoCD
+    tenant: composer-ai
+  namespace: composer-ai-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/redhat-composer-ai/appOfApps.git
+    targetRevision: main
+    path: chatbot-ui
+    helm:
+      valueFiles: 
+        - values.yaml
+      parameters:
+        - name: clusterDomain
+          value: apps.cluster-c4gwj.c4gwj.sandbox1157.opentlc.com
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: composer-ai-apps
+  syncPolicy:
+    automated: 
+      prune: true
+      selfHeal: true
+  ignoreDifferences:
+    - group: apps
+      jsonPointers:
+      - /spec/template/spec/containers/0/image
+      kind: Deployment
+---
+# Source: AppOfApps/templates/application.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: elasticsearch-composer-ai-apps
+  labels:
+    app.kubernetes.io/name: elasticsearch
+    app.kubernetes.io/instance-of: composer-ai
+    app.kubernetes.io/managed-by: ArgoCD
+    tenant: composer-ai
+  namespace: composer-ai-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/redhat-composer-ai/appOfApps.git
+    targetRevision: main
+    path: elasticsearch
+    helm:
+      valueFiles: 
+        - values.yaml
+      parameters:
+        - name: clusterDomain
+          value: apps.cluster-c4gwj.c4gwj.sandbox1157.opentlc.com
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: composer-ai-apps
+  syncPolicy:
+    automated: 
+      prune: true
+      selfHeal: true
+---
+# Source: AppOfApps/templates/application.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kfp-pipeline-composer-ai-apps
+  labels:
+    app.kubernetes.io/name: kfp-pipeline
+    app.kubernetes.io/instance-of: composer-ai
+    app.kubernetes.io/managed-by: ArgoCD
+    tenant: composer-ai
+  namespace: composer-ai-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/redhat-composer-ai/appOfApps.git
+    targetRevision: main
+    path: kfp
+    helm:
+      valueFiles: 
+        - values.yaml
+      parameters:
+        - name: clusterDomain
+          value: apps.cluster-c4gwj.c4gwj.sandbox1157.opentlc.com
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: composer-ai-apps
+  syncPolicy:
+    automated: 
+      prune: true
+      selfHeal: true
+---
+# Source: AppOfApps/templates/application.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mongodb-composer-ai-apps
+  labels:
+    app.kubernetes.io/name: mongodb
+    app.kubernetes.io/instance-of: composer-ai
+    app.kubernetes.io/managed-by: ArgoCD
+    tenant: composer-ai
+  namespace: composer-ai-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/redhat-composer-ai/appOfApps.git
+    targetRevision: main
+    path: conductor/mongodb
+    helm:
+      valueFiles: 
+        - values.yaml
+      parameters:
+        - name: clusterDomain
+          value: apps.cluster-c4gwj.c4gwj.sandbox1157.opentlc.com
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: composer-ai-apps
+  syncPolicy:
+    automated: 
+      prune: true
+      selfHeal: true
+---
+# Source: AppOfApps/templates/application.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: quarkus-llm-router-composer-ai-apps
+  labels:
+    app.kubernetes.io/name: quarkus-llm-router
+    app.kubernetes.io/instance-of: composer-ai
+    app.kubernetes.io/managed-by: ArgoCD
+    tenant: composer-ai
+  namespace: composer-ai-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/redhat-composer-ai/appOfApps.git
+    targetRevision: main
+    path: conductor/quarkus-llm-router
+    helm:
+      valueFiles: 
+        - values.yaml
+      parameters:
+        - name: clusterDomain
+          value: apps.cluster-c4gwj.c4gwj.sandbox1157.opentlc.com
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: composer-ai-apps
+  syncPolicy:
+    automated: 
+      prune: true
+      selfHeal: true
+---
+# Source: AppOfApps/templates/application.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vllm-model-composer-ai-apps
+  labels:
+    app.kubernetes.io/name: vllm-model
+    app.kubernetes.io/instance-of: composer-ai
+    app.kubernetes.io/managed-by: ArgoCD
+    tenant: composer-ai
+  namespace: composer-ai-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/redhat-composer-ai/appOfApps.git
+    targetRevision: main
+    path: vllm
+    helm:
+      valueFiles: 
+        - values.yaml
+      parameters:
+        - name: clusterDomain
+          value: apps.cluster-c4gwj.c4gwj.sandbox1157.opentlc.com
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: composer-ai-apps
+  syncPolicy:
+    automated: 
+      prune: true
+      selfHeal: true
