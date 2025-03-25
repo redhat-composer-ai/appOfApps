@@ -1,6 +1,6 @@
 # disabling specific components for the lab
 applications:
   vllm-model:
-    disable: true
+    enabled: false
   elasticsearch:
-    disable: true
+    enabled: false
