@@ -1,35 +1,6 @@
-# Applications to be deployed
+# disabling specific components for the lab
 applications:
-  # - name: vllm-model
-  #   path: vllm
-  #   namespaceSuffix: apps
-  # - name: elasticsearch
-  #   path: elasticsearch
-  #   namespaceSuffix: apps
-  - name: kfp-pipeline
-    path: kfp
-    namespaceSuffix: apps
-  - name: quarkus-llm-router
-    path: conductor/quarkus-llm-router
-    namespaceSuffix: apps
-    parameters:
-      - name: profile
-        value: prod,lab
-  - name: chatbot-ui
-    path: chatbot-ui
-    namespaceSuffix: apps
-    # Add ignoreDifferences to allow deployment to be updated by ImageStream
-    ignoreDifferences:
-      - group: apps
-        kind: Deployment
-        jsonPointers:
-          - /spec/template/spec/containers/0/image
-  - name: mongodb
-    path: conductor/mongodb
-    namespaceSuffix: apps
-  # - name: bootstrap
-  #   path: util/bootstrap
-  #   namespaceSuffix: apps
-  - name: lab-elastic-secret-job
-    path: util/lab-elastic-secret-job
-    namespaceSuffix: apps
+  vllm-model:
+    enabled: false
+  elasticsearch:
+    enabled: false
