@@ -1,16 +1,9 @@
-# -- String to partially override fullname template (will maintain the release name)
-nameOverride: ""
-# -- String to fully override fullname template
 fullnameOverride: "vllm"
 
-minReplicas: 1
-
-tolerations:
-  - effect: NoSchedule
-    key: nvidia.com/gpu
-    operator: Equal
-
-servingModel:
+inferenceSerivce:
+  storage:
+    storageUri: 'oci://quay.io/redhat-ai-services/modelcar-catalog:mistral-7b-instruct-v0.3'
+  args: []
   resources:
     limits:
       cpu: '4'
@@ -20,17 +13,11 @@ servingModel:
       cpu: '2'
       memory: 16Gi
       nvidia.com/gpu: '1'
-
-runtime:
-  storageUri: 'oci://quay.io/redhat-ai-services/modelcar-catalog:mistral-7b-instruct-v0.3'
-  logLevel: DEBUG
-  # max_content_length: Needs to be changed respective to the model run
-  # Granite-8B-Instruct = 4096
-  # Mistral-7B = 32768
-  # Gemma-2B = 8192
-  # Llama3-8B = 8192
-  maxModelLength: 15344
-  maxSeqLength: 8192
-  gpuMemoryUtilization: 1
-  # 2.14 RHOAI with vLLM v0.5.5
-  image: 'quay.io/modh/vllm@sha256:97b91f9bd71202f5de8d379cfb61baec887b47f836a2ff8b158c946196de5660'
+  tolerations:
+  - effect: NoSchedule
+    key: nvidia.com/gpu
+    operator: Equal
+  - effect: NoSchedule
+    key: nvidia.com/gpu
+    operator: Equal
+    value: "True"
