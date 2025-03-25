@@ -1,14 +1,17 @@
-{{- range .Values.applications }}
-# allow applications to be set to enabled: false
-# `.enabled | default true` always evaluates to true
-# reference: https://broersma.dev/til-helm-boolean-functions-and-falsy-ness/
+{{- range $name, $val := .Values.applications -}}
+{{- with $val -}}
+{{- /*
+    allow applications to be set to enabled: false
+    `.enabled | default true` always evaluates to true
+    reference: https://broersma.dev/til-helm-boolean-functions-and-falsy-ness/
+*/ -}}
 {{- if list nil true | has .enabled }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: {{ .name }}-{{ $.Values.namespacePrefix }}{{ .namespaceSuffix }}
+  name: {{ $name }}-{{ $.Values.namespacePrefix }}{{ .namespaceSuffix }}
   labels:
-    app.kubernetes.io/name: {{ .name }}
+    app.kubernetes.io/name: {{ $name }}
     app.kubernetes.io/instance-of: {{ $.Values.name }}
     app.kubernetes.io/managed-by: ArgoCD
     tenant: {{ $.Values.name }}
@@ -20,7 +23,7 @@ spec:
   source:
     repoURL: {{ $.Values.repo.url }}
     targetRevision: {{ .branch | default $.Values.repo.branch }}
-    path: {{ .path | default .name }}
+    path: {{ .path | default $name }}
     helm:
       valueFiles: 
         - {{ .valueFile | default $.Values.defaultValuesFile }}
@@ -43,5 +46,6 @@ spec:
     {{- toYaml .ignoreDifferences | nindent 4 }}
   {{- end }}
 ---
+{{- end }}
 {{- end }}
 {{- end }}
