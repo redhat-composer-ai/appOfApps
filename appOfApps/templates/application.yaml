@@ -20,10 +20,14 @@ metadata:
     argocd.argoproj.io/sync-wave: "{{ .syncWave | default 0 }}"
 spec:
   project: {{ $.Values.gitops.project | default "default" }}
+  {{- if .sources }}
+  sources:
+    {{- tpl (toYaml .sources) $ | nindent 4 }}
+  {{- else }}
   source:
     repoURL: {{ $.Values.repo.url }}
     targetRevision: {{ .branch | default $.Values.repo.branch }}
-    path: {{ .path | default $name }}
+    path: {{ required (printf ".path is required for %s" $name ) .path }}
     helm:
       valueFiles: 
         - {{ .valueFile | default $.Values.defaultValuesFile }}
@@ -34,6 +38,7 @@ spec:
         - name: {{ .name }}
           value: {{ .value }}
         {{- end }}
+  {{- end }}
   destination:
     server: https://kubernetes.default.svc
     namespace: {{ $.Values.namespacePrefix }}{{ .namespaceSuffix }}
