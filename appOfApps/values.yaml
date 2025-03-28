@@ -17,7 +17,7 @@ applications:
     sources:
       - repoURL: https://redhat-ai-services.github.io/helm-charts/
         chart: vllm-kserve
-        targetRevision: "0.3.6"
+        targetRevision: "0.3.7"
         helm:
           valueFiles:
             - $values/vllm/values.yaml
