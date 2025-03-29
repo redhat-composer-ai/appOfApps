@@ -32,14 +32,17 @@ spec:
           resources:
             {{- .Values.resources | toYaml | nindent 12 }}
       {{- if .Values.openid.enabled }}
-        {{- template "chatbotUi.openIdSidecar" . }}
+        {{- template "chatbot-ui.openIdSidecar" . }}
       {{- end }}
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       volumes:
-      - name: config-volume
-        configMap:
+        - name: config-volume
+          configMap:
           name: {{ .Values.name }}-config
+      {{- if .Values.openid.enabled }}
+        {{- template "chatbot-ui.openIdVolume" . }}
+      {{- end }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
