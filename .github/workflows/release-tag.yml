@@ -25,6 +25,7 @@ jobs:
       - name: Update Tag Values
         run: |
           yq eval -i '.repo.branch = "${{ github.event.inputs.tag}}"' appOfApps/values.yaml
+          yq eval -i '.appVersion = "${{ github.event.inputs.tag}}"' appOfApps/Chart.yaml conductor/quarkus-llm-router/Chart.yaml chatbot-ui/Chart.yaml
 
       - name: Commit changes
         run: |
