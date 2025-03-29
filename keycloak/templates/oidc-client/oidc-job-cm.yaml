@@ -1,0 +1,9 @@
+{{- if .Values.oidcclient.enabled -}}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: oidc-job-cm
+data:
+{{ (.Files.Glob "scripts/*").AsConfig | indent 2 }}
+{{- end -}}
