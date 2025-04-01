@@ -7,7 +7,7 @@ labels:
 
 name: quarkus-llm-router
 
-image:  quay.io/redhat-composer-ai/conductor:v0.2.3
+image:  quay.io/redhat-composer-ai/conductor:v0.2.5
 imagePullPolicy: Always
 
 # Quarkus profile
